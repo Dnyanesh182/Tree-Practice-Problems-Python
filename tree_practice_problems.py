@@ -1,4 +1,4 @@
-# UC6 – Calculate height (depth) of the binary tree.
+# UC7 – Count total number of nodes and leaf nodes in the tree.
 
 from collections import deque
 
@@ -38,19 +38,26 @@ class BinaryTree:
             else:
                 queue.append(current.right)
 
-    def height(self, node) -> int:
+    def count_nodes(self, node) -> int:
         """
-        Calculate height of binary tree.
-
-        Time Complexity: O(n)
+        Count total nodes in tree.
         """
         if node is None:
             return 0
 
-        left_height = self.height(node.left)
-        right_height = self.height(node.right)
+        return 1 + self.count_nodes(node.left) + self.count_nodes(node.right)
 
-        return 1 + max(left_height, right_height)
+    def count_leaves(self, node) -> int:
+        """
+        Count leaf nodes in tree.
+        """
+        if node is None:
+            return 0
+
+        if node.left is None and node.right is None:
+            return 1
+
+        return self.count_leaves(node.left) + self.count_leaves(node.right)
 
 
 def main() -> None:
@@ -62,7 +69,8 @@ def main() -> None:
     tree.insert(40)
     tree.insert(50)
 
-    print(f"Height of tree: {tree.height(tree.root)}")
+    print(f"Total Nodes: {tree.count_nodes(tree.root)}")
+    print(f"Leaf Nodes: {tree.count_leaves(tree.root)}")
 
 
 if __name__ == "__main__":
