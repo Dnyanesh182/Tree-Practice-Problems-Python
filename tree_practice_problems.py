@@ -1,4 +1,4 @@
-# UC3 – Implement inorder traversal (Left → Root → Right).
+# UC4 – Implement preorder traversal (Root → Left → Right).
 
 from collections import deque
 
@@ -38,16 +38,16 @@ class BinaryTree:
             else:
                 queue.append(current.right)
 
-    def inorder(self, node) -> None:
+    def preorder(self, node) -> None:
         """
-        Perform inorder traversal.
+        Perform preorder traversal.
 
-        Order: Left → Root → Right
+        Order: Root → Left → Right
         """
         if node:
-            self.inorder(node.left)
             print(node.data, end=" ")
-            self.inorder(node.right)
+            self.preorder(node.left)
+            self.preorder(node.right)
 
 
 def main() -> None:
@@ -59,8 +59,8 @@ def main() -> None:
     tree.insert(40)
     tree.insert(50)
 
-    print("Inorder Traversal:")
-    tree.inorder(tree.root)
+    print("Preorder Traversal:")
+    tree.preorder(tree.root)
 
 
 if __name__ == "__main__":
