@@ -1,6 +1,4 @@
-# UC9 – Perform level order traversal using queue (BFS).
-
-from collections import deque
+# UC10 – Implement Binary Search Tree (BST) with insert and search operations.
 
 
 class Node:
@@ -10,67 +8,59 @@ class Node:
         self.right = None
 
 
-class BinaryTree:
+class BST:
+    """
+    Binary Search Tree implementation.
+    """
+
     def __init__(self) -> None:
         self.root = None
 
-    def insert(self, data) -> None:
-        new_node = Node(data)
-
-        if not self.root:
-            self.root = new_node
-            return
-
-        queue = deque([self.root])
-
-        while queue:
-            current = queue.popleft()
-
-            if not current.left:
-                current.left = new_node
-                return
-            else:
-                queue.append(current.left)
-
-            if not current.right:
-                current.right = new_node
-                return
-            else:
-                queue.append(current.right)
-
-    def level_order(self) -> None:
+    def insert(self, node, data):
         """
-        Perform BFS traversal.
+        Insert node in BST.
 
-        Time Complexity: O(n)
+        Time Complexity: O(log n) average
         """
-        if not self.root:
-            return
+        if node is None:
+            return Node(data)
 
-        queue = deque([self.root])
+        if data < node.data:
+            node.left = self.insert(node.left, data)
+        else:
+            node.right = self.insert(node.right, data)
 
-        while queue:
-            current = queue.popleft()
-            print(current.data, end=" ")
+        return node
 
-            if current.left:
-                queue.append(current.left)
+    def search(self, node, target) -> bool:
+        """
+        Search value in BST.
 
-            if current.right:
-                queue.append(current.right)
+        Time Complexity: O(log n) average
+        """
+        if node is None:
+            return False
+
+        if node.data == target:
+            return True
+
+        if target < node.data:
+            return self.search(node.left, target)
+        else:
+            return self.search(node.right, target)
 
 
 def main() -> None:
-    tree = BinaryTree()
+    bst = BST()
 
-    tree.insert(10)
-    tree.insert(20)
-    tree.insert(30)
-    tree.insert(40)
-    tree.insert(50)
+    # Insert values
+    values = [50, 30, 70, 20, 40, 60, 80]
+    for val in values:
+        bst.root = bst.insert(bst.root, val)
 
-    print("Level Order Traversal:")
-    tree.level_order()
+    # Search values
+    print(f"Search 40: {bst.search(bst.root, 40)}")
+    print(f"Search 90: {bst.search(bst.root, 90)}")
 
 
 if __name__ == "__main__":
