@@ -1,4 +1,4 @@
-# UC8 – Search for a value in the binary tree using DFS.
+# UC9 – Perform level order traversal using queue (BFS).
 
 from collections import deque
 
@@ -38,22 +38,26 @@ class BinaryTree:
             else:
                 queue.append(current.right)
 
-    def dfs_search(self, node, target) -> bool:
+    def level_order(self) -> None:
         """
-        Search value using DFS (recursive).
+        Perform BFS traversal.
 
         Time Complexity: O(n)
         """
-        if node is None:
-            return False
+        if not self.root:
+            return
 
-        if node.data == target:
-            return True
+        queue = deque([self.root])
 
-        return (
-            self.dfs_search(node.left, target) or
-            self.dfs_search(node.right, target)
-        )
+        while queue:
+            current = queue.popleft()
+            print(current.data, end=" ")
+
+            if current.left:
+                queue.append(current.left)
+
+            if current.right:
+                queue.append(current.right)
 
 
 def main() -> None:
@@ -65,11 +69,8 @@ def main() -> None:
     tree.insert(40)
     tree.insert(50)
 
-    target = 40
-    print(f"Search {target}: {tree.dfs_search(tree.root, target)}")
-
-    target = 99
-    print(f"Search {target}: {tree.dfs_search(tree.root, target)}")
+    print("Level Order Traversal:")
+    tree.level_order()
 
 
 if __name__ == "__main__":
