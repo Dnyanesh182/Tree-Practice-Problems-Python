@@ -1,4 +1,4 @@
-# UC5 – Implement postorder traversal (Left → Right → Root).
+# UC6 – Calculate height (depth) of the binary tree.
 
 from collections import deque
 
@@ -38,16 +38,19 @@ class BinaryTree:
             else:
                 queue.append(current.right)
 
-    def postorder(self, node) -> None:
+    def height(self, node) -> int:
         """
-        Perform postorder traversal.
+        Calculate height of binary tree.
 
-        Order: Left → Right → Root
+        Time Complexity: O(n)
         """
-        if node:
-            self.postorder(node.left)
-            self.postorder(node.right)
-            print(node.data, end=" ")
+        if node is None:
+            return 0
+
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+
+        return 1 + max(left_height, right_height)
 
 
 def main() -> None:
@@ -59,8 +62,7 @@ def main() -> None:
     tree.insert(40)
     tree.insert(50)
 
-    print("Postorder Traversal:")
-    tree.postorder(tree.root)
+    print(f"Height of tree: {tree.height(tree.root)}")
 
 
 if __name__ == "__main__":
