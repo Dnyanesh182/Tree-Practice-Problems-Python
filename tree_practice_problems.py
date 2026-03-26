@@ -1,13 +1,9 @@
-# UC2 – Create a Binary Tree class and insert nodes into the tree.
+# UC3 – Implement inorder traversal (Left → Root → Right).
 
 from collections import deque
 
 
 class Node:
-    """
-    Represents a node in a binary tree.
-    """
-
     def __init__(self, data) -> None:
         self.data = data
         self.left = None
@@ -15,25 +11,14 @@ class Node:
 
 
 class BinaryTree:
-    """
-    Binary Tree implementation with level-order insertion.
-    """
-
     def __init__(self) -> None:
         self.root = None
 
     def insert(self, data) -> None:
-        """
-        Insert node in level-order (BFS style).
-
-        Time Complexity: O(n)
-        """
         new_node = Node(data)
 
-        # If tree is empty
         if not self.root:
             self.root = new_node
-            print(f"Inserted root: {data}")
             return
 
         queue = deque([self.root])
@@ -41,21 +26,28 @@ class BinaryTree:
         while queue:
             current = queue.popleft()
 
-            # Insert as left child
             if not current.left:
                 current.left = new_node
-                print(f"Inserted {data} to left of {current.data}")
                 return
             else:
                 queue.append(current.left)
 
-            # Insert as right child
             if not current.right:
                 current.right = new_node
-                print(f"Inserted {data} to right of {current.data}")
                 return
             else:
                 queue.append(current.right)
+
+    def inorder(self, node) -> None:
+        """
+        Perform inorder traversal.
+
+        Order: Left → Root → Right
+        """
+        if node:
+            self.inorder(node.left)
+            print(node.data, end=" ")
+            self.inorder(node.right)
 
 
 def main() -> None:
@@ -66,6 +58,9 @@ def main() -> None:
     tree.insert(30)
     tree.insert(40)
     tree.insert(50)
+
+    print("Inorder Traversal:")
+    tree.inorder(tree.root)
 
 
 if __name__ == "__main__":
