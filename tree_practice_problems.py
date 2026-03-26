@@ -1,4 +1,4 @@
-# UC7 – Count total number of nodes and leaf nodes in the tree.
+# UC8 – Search for a value in the binary tree using DFS.
 
 from collections import deque
 
@@ -38,26 +38,22 @@ class BinaryTree:
             else:
                 queue.append(current.right)
 
-    def count_nodes(self, node) -> int:
+    def dfs_search(self, node, target) -> bool:
         """
-        Count total nodes in tree.
-        """
-        if node is None:
-            return 0
+        Search value using DFS (recursive).
 
-        return 1 + self.count_nodes(node.left) + self.count_nodes(node.right)
-
-    def count_leaves(self, node) -> int:
-        """
-        Count leaf nodes in tree.
+        Time Complexity: O(n)
         """
         if node is None:
-            return 0
+            return False
 
-        if node.left is None and node.right is None:
-            return 1
+        if node.data == target:
+            return True
 
-        return self.count_leaves(node.left) + self.count_leaves(node.right)
+        return (
+            self.dfs_search(node.left, target) or
+            self.dfs_search(node.right, target)
+        )
 
 
 def main() -> None:
@@ -69,8 +65,11 @@ def main() -> None:
     tree.insert(40)
     tree.insert(50)
 
-    print(f"Total Nodes: {tree.count_nodes(tree.root)}")
-    print(f"Leaf Nodes: {tree.count_leaves(tree.root)}")
+    target = 40
+    print(f"Search {target}: {tree.dfs_search(tree.root, target)}")
+
+    target = 99
+    print(f"Search {target}: {tree.dfs_search(tree.root, target)}")
 
 
 if __name__ == "__main__":
